@@ -32,7 +32,7 @@ export const PROFILE_INFO = {
   phone: "+62 881-0240-40191",
   whatsappNumber: "62881024040191",
   email: "yudi02012001@gmail.com",
-  photoUrl: "https://i.ibb.co.com/tT5jSqmj/Nur-Wahyudi.jpg",
+  photoUrl: "/profile/nur-wahyudi.jpg",
   status: "Tersedia untuk Peluang Kerja (Ready to Hire)",
   education: "SMK / Kejuruan Akuntansi Keuangan (Bersertifikat Kompetensi)",
 };
@@ -44,7 +44,7 @@ export const CERTIFICATES: Certificate[] = [
     issuer: "Badan Nasional Sertifikasi / Lembaga Sertifikasi Profesi",
     category: "Akuntansi",
     year: "Terverifikasi",
-    url: "https://i.ibb.co.com/v4RWFG4F/Sertifikat-Competensi-page-0001.jpg",
+    url: "/certificates/sertifikat-akuntansi.jpg",
     description: "Sertifikasi resmi kompetensi keahlian akuntansi meliputi pencatatan jurnal, penyusunan buku besar, siklus akuntansi perusahaan dagang/jasa, dan pembuatan laporan keuangan sesuai standar.",
     skillsHighlighted: ["Siklus Akuntansi", "Buku Besar & Jurnal", "Rekonsiliasi Kas", "Kepatuhan Finansial"]
   },
@@ -54,7 +54,7 @@ export const CERTIFICATES: Certificate[] = [
     issuer: "Organisasi Siswa Intra Sekolah (OSIS)",
     category: "Organisasi",
     year: "Terverifikasi",
-    url: "https://i.ibb.co.com/VYFC0gMJ/Sertifikat-OSIS-Nur-Wahyudi-page-0001.jpg",
+    url: "/certificates/sertifikat-osis.jpg",
     description: "Penghargaan keaktifan dan dedikasi dalam kepengurusan organisasi sekolah, membuktikan kepemimpinan, integritas, etika komunikasi, dan kemampuan koordinasi antar divisi.",
     skillsHighlighted: ["Kepemimpinan", "Kerja Sama Tim", "Manajemen Kegiatan", "Etika Komunikasi"]
   },
@@ -64,7 +64,7 @@ export const CERTIFICATES: Certificate[] = [
     issuer: "PT Kompas Gramedia",
     category: "Retail & Magang",
     year: "Terverifikasi",
-    url: "https://i.ibb.co.com/wZpZ0tBQ/Sertifikat-PT-KOMPAS-GRAMEDIA-page-0001.jpg",
+    url: "/certificates/sertifikat-gramedia.jpg",
     description: "Sertifikat pelaksanaan praktik kerja industri di jaringan retail penerbitan terbesar di Indonesia, mencakup administrasi gudang, inventaris buku, dan pelayanan pelanggan.",
     skillsHighlighted: ["Administrasi Gudang", "Stock Control", "Pelayanan Pelanggan", "Etos Kerja Industri"]
   },
@@ -74,7 +74,7 @@ export const CERTIFICATES: Certificate[] = [
     issuer: "PT AEON Store Indonesia",
     category: "Retail & Magang",
     year: "Terverifikasi",
-    url: "https://i.ibb.co.com/ZR6n6TF9/Sertifikat-PT-AEON-STORE-INDONESIA-page-0001.jpg",
+    url: "/certificates/sertifikat-aeon.jpg",
     description: "Sertifikat pengalaman kerja di jaringan ritel multinasional Jepang dengan penekanan pada standar pelayanan prima, ketertiban visual merchandising, dan kepatuhan SOP.",
     skillsHighlighted: ["Standar SOP Retail Jepang", "Visual Merchandising", "Inventory Control", "Customer Service"]
   },
@@ -84,7 +84,7 @@ export const CERTIFICATES: Certificate[] = [
     issuer: "PT Trans Retail Indonesia (Transmart Carrefour)",
     category: "Pelayanan",
     year: "Terverifikasi",
-    url: "https://i.ibb.co.com/Q7FD6tRD/Sertifikat-PT-Trans-Retail-Indonesia-page-0001.jpg",
+    url: "/certificates/sertifikat-transmart.jpg",
     description: "Sertifikat profesional sebagai Kasir (Cashier) yang memproses volume transaksi harian tinggi dengan rekam jejak akurasi penutupan kas tanpa selisih.",
     skillsHighlighted: ["Akurasi Kasir & EDC", "Laporan Register Kas", "Ketelitian Zero-Discrepancy", "Kecepatan Transaksi"]
   }

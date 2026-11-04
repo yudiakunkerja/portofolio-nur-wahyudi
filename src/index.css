@@ -27,3 +27,23 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #334155;
 }
+
+/* Print Styles for 1 Complete Application Dossier PDF */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+  header, footer, nav, .print\\:hidden, #tentang, #keahlian, #fitur-ai, #kontak, section {
+    display: none !important;
+  }
+  /* Show only print targets */
+  .fixed {
+    position: static !important;
+    display: block !important;
+  }
+  .print\\:break-after-page {
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+}

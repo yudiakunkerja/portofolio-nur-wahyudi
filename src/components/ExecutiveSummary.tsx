@@ -1,46 +1,79 @@
 import React from "react";
-import { ScrollText, CheckCircle2, Target, Shield, HeartHandshake } from "lucide-react";
+import { ScrollText, CheckCircle2, Target, Shield, HeartHandshake, Edit2 } from "lucide-react";
 import { PROFILE_INFO } from "../data/portfolioData";
 
-export const ExecutiveSummary: React.FC = () => {
-  const principles = [
+interface ExecutiveSummaryProps {
+  executiveSummary?: any;
+  isHrdView?: boolean;
+  onOpenEditor?: () => void;
+}
+
+export const ExecutiveSummary: React.FC<ExecutiveSummaryProps> = ({
+  executiveSummary,
+  isHrdView = false,
+  onOpenEditor,
+}) => {
+  const title = executiveSummary?.title || "Dedikasi Ketelitian & Disiplin Administrasi Finansial";
+  const subtitle = executiveSummary?.subtitle || "Mengenal lebih dekat dedikasi kerja, filosofi profesional, dan nilai tambah yang siap saya berikan untuk organisasi Anda.";
+  const quote = executiveSummary?.quote || `"Bagi saya, administrasi dan keuangan adalah fondasi keteraturan operasional. Bekerja dengan disiplin tinggi, integritas tanpa kompromi, dan pembukuan tanpa selisih adalah standar wajib yang selalu saya pegang teguh."`;
+  const details = executiveSummary?.details || "Dengan latar belakang pendidikan Akuntansi bersertifikat resmi serta pengalaman kerja nyata di lingkungan tambang yang dinamis dan retail yang serba cepat, saya mampu beradaptasi cepat dengan alur kerja, software pembukuan, maupun standar SOP perusahaan Anda.";
+  
+  const rawPrinciples = executiveSummary?.principles || [
     {
       title: "Presisi & Nol Selisih (Zero Discrepancy)",
       desc: "Menjaga keakuratan setiap transaksi keuangan, pencatatan petty cash, dan input data tanpa margin error.",
-      icon: Target,
     },
     {
       title: "Integritas & Kejujuran Finansial",
       desc: "Memiliki rekam jejak tepercaya selama 5 tahun mengelola dana operasional dan berkas berharga perusahaan.",
-      icon: Shield,
     },
     {
       title: "Kerapihan Sistem Pengarsipan",
       desc: "Menerapkan struktur filing dokumen fisik dan digital yang sistematis, mempermudah audit dan penelusuran bukti.",
-      icon: ScrollText,
     },
     {
       title: "Pelayanan & Kolaborasi Tim",
       desc: "Terlatih dalam service excellence retail modern dan koordinasi lintas departemen dengan komunikasi santun dan cekatan.",
-      icon: HeartHandshake,
     },
   ];
+
+  const getPrincipleIcon = (idx: number) => {
+    switch (idx) {
+      case 0: return Target;
+      case 1: return Shield;
+      case 2: return ScrollText;
+      default: return HeartHandshake;
+    }
+  };
 
   return (
     <section id="tentang" className="py-20 border-b border-slate-900 relative">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-14 space-y-3">
-          <p className="text-xs font-semibold text-emerald-400 tracking-wider uppercase font-mono">
-            Executive Summary
-          </p>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight">
-            Dedikasi Ketelitian & Disiplin Administrasi Finansial
-          </h2>
-          <p className="text-base text-slate-400 leading-relaxed">
-            Mengenal lebih dekat dedikasi kerja, filosofi profesional, dan nilai tambah yang siap saya berikan untuk organisasi Anda.
-          </p>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-14">
+          <div className="max-w-3xl space-y-3">
+            <p className="text-xs font-semibold text-emerald-400 tracking-wider uppercase font-mono">
+              Executive Summary
+            </p>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight">
+              {title}
+            </h2>
+            <p className="text-base text-slate-400 leading-relaxed">
+              {subtitle}
+            </p>
+          </div>
+
+          {!isHrdView && onOpenEditor && (
+            <button
+              onClick={onOpenEditor}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs font-medium transition-colors shrink-0"
+              title="Edit Teks & Pilar Executive Summary"
+            >
+              <Edit2 size={12} className="text-emerald-400" />
+              <span>Edit Bagian Ini</span>
+            </button>
+          )}
         </div>
 
         {/* Narrative & Quote Grid */}
@@ -53,10 +86,10 @@ export const ExecutiveSummary: React.FC = () => {
                 Komitmen Profesional
               </span>
               <p className="text-xl sm:text-2xl font-light text-slate-200 leading-relaxed italic">
-                "Bagi saya, administrasi dan keuangan adalah fondasi keteraturan operasional. Bekerja dengan disiplin tinggi, integritas tanpa kompromi, dan pembukuan tanpa selisih adalah standar wajib yang selalu saya pegang teguh."
+                {quote.startsWith('"') ? quote : `"${quote}"`}
               </p>
               <p className="text-sm text-slate-400 leading-relaxed">
-                Dengan latar belakang pendidikan Akuntansi bersertifikat resmi serta pengalaman kerja nyata di lingkungan tambang yang dinamis dan retail yang serba cepat, saya mampu beradaptasi cepat dengan alur kerja, software pembukuan, maupun standar SOP perusahaan Anda.
+                {details}
               </p>
             </div>
 
@@ -72,10 +105,10 @@ export const ExecutiveSummary: React.FC = () => {
             </div>
           </div>
 
-          {/* 4 Pillars of Excellence */}
-          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
-            {principles.map((p, idx) => {
-              const Icon = p.icon;
+          {/* Pilar Nilai Keunggulan (Dinamis) */}
+          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 max-h-[720px] overflow-y-auto pr-1">
+            {rawPrinciples.map((p: any, idx: number) => {
+              const Icon = getPrincipleIcon(idx % 4);
               return (
                 <div 
                   key={idx}

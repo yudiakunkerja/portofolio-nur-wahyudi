@@ -1,16 +1,28 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Sparkles, MessageCircle, FileText, CheckCircle2, ChevronDown, Volume2, ShieldCheck, ArrowRight } from "lucide-react";
-import { PROFILE_INFO } from "../data/portfolioData";
+import { Sparkles, MessageCircle, FileText, CheckCircle2, ChevronDown, Volume2, ShieldCheck, ArrowRight, Edit2 } from "lucide-react";
+import { PROFILE_INFO as DEFAULT_PROFILE } from "../data/portfolioData";
 
 interface HeroProps {
+  profile?: any;
+  isHrdView?: boolean;
   onStartPitch: () => void;
   onExploreAI: () => void;
+  onOpenEditor?: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onStartPitch, onExploreAI }) => {
+export const Hero: React.FC<HeroProps> = ({
+  profile = DEFAULT_PROFILE,
+  isHrdView = false,
+  onStartPitch,
+  onExploreAI,
+  onOpenEditor,
+}) => {
+  const p = profile || DEFAULT_PROFILE;
+  const whatsappNumber = p.whatsappNumber || "62881024040191";
+
   const handleWhatsApp = () => {
-    window.open(`https://wa.me/${PROFILE_INFO.whatsappNumber}?text=Halo%20Nur%20Wahyudi,%20kami%20telah%20melihat%20portofolio%20Anda.`, "_blank");
+    window.open(`https://wa.me/${whatsappNumber}?text=Halo%20Nur%20Wahyudi,%20kami%20telah%20melihat%20portofolio%20Anda.`, "_blank");
   };
 
   return (
@@ -30,31 +42,42 @@ export const Hero: React.FC<HeroProps> = ({ onStartPitch, onExploreAI }) => {
             className="lg:col-span-7 space-y-6"
           >
             {/* Unboxed Metadata Kicker (Anti-pill) */}
-            <div className="flex items-center gap-2 text-xs font-semibold text-emerald-400 tracking-wider uppercase font-mono">
+            <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-emerald-400 tracking-wider uppercase font-mono">
               <Sparkles size={14} className="text-emerald-400" />
               <span>Portofolio Karier Resmi</span>
               <span aria-hidden="true" className="text-slate-600">·</span>
-              <span className="text-slate-300">{PROFILE_INFO.status}</span>
+              <span className="text-slate-300">{p.status || "Tersedia untuk Peluang Kerja"}</span>
             </div>
 
             {/* Display Headline with balanced text */}
             <div className="space-y-2">
-              <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.05] text-balance">
-                NUR WAHYUDI
-              </h1>
+              <div className="flex items-center gap-3">
+                <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.05] text-balance">
+                  {p.name?.toUpperCase() || "NUR WAHYUDI"}
+                </h1>
+                {!isHrdView && onOpenEditor && (
+                  <button
+                    onClick={onOpenEditor}
+                    className="p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-emerald-400 border border-slate-800 transition-colors"
+                    title="Edit Profil & Hero"
+                  >
+                    <Edit2 size={15} />
+                  </button>
+                )}
+              </div>
               <p className="font-display text-xl sm:text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-cyan-200 to-slate-200">
-                {PROFILE_INFO.title}
+                {p.title || "Administrative Specialist & Accounting Professional"}
               </p>
             </div>
 
             {/* Lead Narrative */}
             <p className="text-base sm:text-lg text-slate-300 font-normal leading-relaxed max-w-2xl">
-              Spesialis administrasi dan keuangan berpengalaman lebih dari 5 tahun di industri pertambangan (PT Kovalen Mining) dan retail terkemuka. Terbiasa mengelola arus kas harian, rekonsiliasi keuangan, dan pengarsipan berkas terstruktur dengan integritas tinggi dan rekam jejak tanpa selisih.
+              {p.summary || "Spesialis administrasi dan keuangan berpengalaman lebih dari 5 tahun di industri pertambangan (PT Kovalen Mining) dan retail terkemuka. Terbiasa mengelola arus kas harian, rekonsiliasi keuangan, dan pengarsipan berkas terstruktur dengan integritas tinggi dan rekam jejak tanpa selisih."}
             </p>
 
             {/* Unboxed Key Facts */}
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-slate-400 border-t border-slate-800/80 pt-4">
-              <span className="text-slate-200 font-medium">Pagedangan, Tangerang - Banten</span>
+              <span className="text-slate-200 font-medium">{p.location || "Pagedangan, Tangerang - Banten"}</span>
               <span aria-hidden="true" className="text-slate-700">·</span>
               <span className="text-slate-200 font-medium">Sertifikat Kompetensi Akuntansi</span>
               <span aria-hidden="true" className="text-slate-700">·</span>
@@ -109,8 +132,8 @@ export const Hero: React.FC<HeroProps> = ({ onStartPitch, onExploreAI }) => {
                 {/* Photo Frame */}
                 <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 group">
                   <img
-                    src={PROFILE_INFO.photoUrl}
-                    alt="Nur Wahyudi - Administrative Specialist & Accounting Professional"
+                    src={p.photoUrl || DEFAULT_PROFILE.photoUrl}
+                    alt={`${p.name || "Nur Wahyudi"} - ${p.title}`}
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                   />
@@ -129,14 +152,14 @@ export const Hero: React.FC<HeroProps> = ({ onStartPitch, onExploreAI }) => {
                     </div>
 
                     <p className="text-white font-bold text-lg leading-tight font-display">
-                      Nur Wahyudi
+                      {p.name || "Nur Wahyudi"}
                     </p>
                     <p className="text-xs text-slate-300 font-normal">
                       Ex-Staff Administrasi PT Kovalen Mining · Bersertifikat Akuntansi
                     </p>
 
                     <div className="pt-2 flex items-center justify-between text-[11px] text-slate-400 border-t border-slate-800/80">
-                      <span>Domisili: Pagedangan, Tangerang</span>
+                      <span>Domisili: {p.location || "Pagedangan, Tangerang"}</span>
                       <span className="text-emerald-400 font-medium">Tersedia Segera</span>
                     </div>
                   </div>

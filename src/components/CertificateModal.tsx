@@ -70,6 +70,13 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({ certificate,
               src={certificate.url}
               alt={certificate.name}
               referrerPolicy="no-referrer"
+              onError={(e) => {
+                const img = e.currentTarget;
+                if (!img.dataset.hasFailed) {
+                  img.dataset.hasFailed = "true";
+                  img.src = `https://i.ibb.co.com/v4RWFG4F/Sertifikat-Competensi-page-0001.jpg`;
+                }
+              }}
               className="max-h-[65vh] w-auto max-w-full object-contain p-2"
             />
           </div>

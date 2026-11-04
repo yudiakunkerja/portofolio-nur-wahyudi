@@ -1,11 +1,21 @@
 import React, { useState } from "react";
-import { Briefcase, Calendar, MapPin, CheckCircle2, ChevronRight, Layers } from "lucide-react";
-import { EXPERIENCES } from "../data/portfolioData";
+import { Briefcase, Calendar, MapPin, CheckCircle2, ChevronRight, Layers, Trash2 } from "lucide-react";
+import { EXPERIENCES as DEFAULT_EXPERIENCES, Experience } from "../data/portfolioData";
 
-export const ExperienceSection: React.FC = () => {
+interface ExperienceSectionProps {
+  experiences?: Experience[];
+  isHrdView?: boolean;
+  onDeleteExperience?: (id: string) => void;
+}
+
+export const ExperienceSection: React.FC<ExperienceSectionProps> = ({
+  experiences = DEFAULT_EXPERIENCES,
+  isHrdView = false,
+  onDeleteExperience,
+}) => {
   const [filter, setFilter] = useState<"all" | "administrasi" | "retail">("all");
 
-  const filteredExperiences = EXPERIENCES.filter((exp) => {
+  const filteredExperiences = experiences.filter((exp) => {
     if (filter === "all") return true;
     return exp.category === filter;
   });
@@ -38,7 +48,7 @@ export const ExperienceSection: React.FC = () => {
                   : "text-slate-400 hover:text-white"
               }`}
             >
-              Semua Pengalaman ({EXPERIENCES.length})
+              Semua Pengalaman ({experiences.length})
             </button>
             <button
               onClick={() => setFilter("administrasi")}
@@ -65,10 +75,10 @@ export const ExperienceSection: React.FC = () => {
 
         {/* Experience Cards */}
         <div className="space-y-8">
-          {filteredExperiences.map((exp, index) => (
+          {filteredExperiences.map((exp) => (
             <div
               key={exp.id}
-              className="p-8 sm:p-10 rounded-3xl bg-slate-900/50 border border-slate-800/80 hover:border-slate-700 transition-all space-y-6"
+              className="p-8 sm:p-10 rounded-3xl bg-slate-900/50 border border-slate-800/80 hover:border-slate-700 transition-all space-y-6 relative group"
             >
               {/* Header Info */}
               <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 border-b border-slate-800/80 pb-6">
@@ -91,8 +101,19 @@ export const ExperienceSection: React.FC = () => {
 
                 <div className="flex items-center gap-2 self-start lg:self-center">
                   <span className="text-xs font-mono text-slate-400 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60">
-                    {exp.category === "administrasi" ? "Sektor Pertambangan" : "Sektor Ritel Modern"}
+                    {exp.category === "administrasi" ? "Sektor Pertambangan / Keuangan" : "Sektor Ritel Modern"}
                   </span>
+                  
+                  {/* Delete button (Admin mode only) */}
+                  {!isHrdView && onDeleteExperience && (
+                    <button
+                      onClick={() => onDeleteExperience(exp.id)}
+                      className="p-1.5 text-slate-500 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
+                      title="Hapus riwayat pekerjaan ini"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  )}
                 </div>
               </div>
 

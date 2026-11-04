@@ -1,9 +1,19 @@
 import React, { useState } from "react";
-import { Award, ExternalLink, Eye, ShieldCheck, CheckCircle2 } from "lucide-react";
-import { CERTIFICATES, Certificate } from "../data/portfolioData";
+import { Award, ExternalLink, Eye, ShieldCheck, CheckCircle2, Trash2 } from "lucide-react";
+import { CERTIFICATES as DEFAULT_CERTS, Certificate } from "../data/portfolioData";
 import { CertificateModal } from "./CertificateModal";
 
-export const CertificateGallery: React.FC = () => {
+interface CertificateGalleryProps {
+  certificates?: Certificate[];
+  isHrdView?: boolean;
+  onDeleteCertificate?: (id: string) => void;
+}
+
+export const CertificateGallery: React.FC<CertificateGalleryProps> = ({
+  certificates = DEFAULT_CERTS,
+  isHrdView = false,
+  onDeleteCertificate,
+}) => {
   const [selectedCert, setSelectedCert] = useState<Certificate | null>(null);
 
   return (
@@ -25,11 +35,11 @@ export const CertificateGallery: React.FC = () => {
 
         {/* Certificate Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {CERTIFICATES.map((cert, index) => (
+          {certificates.map((cert) => (
             <div
               key={cert.id}
               onClick={() => setSelectedCert(cert)}
-              className="group cursor-pointer rounded-3xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:shadow-xl hover:shadow-emerald-500/5 transition-all overflow-hidden flex flex-col justify-between"
+              className="group cursor-pointer rounded-3xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:shadow-xl hover:shadow-emerald-500/5 transition-all overflow-hidden flex flex-col justify-between relative"
             >
               {/* Image Preview Container */}
               <div className="relative aspect-[16/10] bg-slate-950 overflow-hidden border-b border-slate-800">
@@ -37,6 +47,13 @@ export const CertificateGallery: React.FC = () => {
                   src={cert.url}
                   alt={cert.name}
                   referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    const img = e.currentTarget;
+                    if (!img.dataset.hasFailed) {
+                      img.dataset.hasFailed = "true";
+                      img.src = `/certificates/sertifikat-akuntansi.jpg`;
+                    }
+                  }}
                   className="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-105"
                 />
 
@@ -54,6 +71,20 @@ export const CertificateGallery: React.FC = () => {
                     {cert.category}
                   </span>
                 </div>
+
+                {/* Delete button (Admin mode only) */}
+                {!isHrdView && onDeleteCertificate && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDeleteCertificate(cert.id);
+                    }}
+                    className="absolute top-3 right-3 p-1.5 rounded-lg bg-slate-950/80 border border-slate-700 text-slate-400 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                    title="Hapus sertifikat ini"
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                )}
               </div>
 
               {/* Certificate Info */}
